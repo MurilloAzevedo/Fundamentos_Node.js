@@ -2,8 +2,20 @@ import http from 'node:http'
 
 const user = []  // Iremos converter esse array em JSON para enviar ao frontend
 
-const server = http.createServer ((request, response) => {
+const server = http.createServer (async(request, response) => {
     const {method, url} = request
+
+    const buffers = []
+
+    for await(const chunck of request){
+        buffers.push(chunck)
+    }
+
+    try {
+        request.body = JSON.parse(Buffer.concat(buffers).toString())   
+    } catch {
+        request.body = null
+    }
 
     if(method === 'GET' && url === '/users'){
         return response
@@ -12,11 +24,12 @@ const server = http.createServer ((request, response) => {
     }
 
     if(method === 'POST' && url === '/users'){
+        const { name, email } = request.body
 
         user.push({
             id: 1,
-            name: 'teste',
-            email: 'teste@example.com',
+            name,
+            email,
         })
 
         return response.writeHead(201).end()
