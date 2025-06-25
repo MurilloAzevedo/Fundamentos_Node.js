@@ -1,36 +1,21 @@
 import http from 'node:http'
-import { randomUUID } from 'node:crypto'
 import { json } from './middlewares/json.js'
-import { Database } from './database.js'
+import { routes } from './routes.js'
 
 //const user = []  // Iremos converter esse array em JSON para enviar ao frontend
-const database = new Database
+
 
 const server = http.createServer (async(request, response) => {
     const {method, url} = request
 
     await json(request, response)
 
-    if(method === 'GET' && url === '/users'){
-        const user = database.select('users')
+    const route = routes.find(route => {
+        return route.method === method && route.path === url
+    })
 
-        return response
-        .setHeader('Content-Type', 'application/json') // Definindo o tipo de conteúdo da resposta como JSON
-        .end(JSON.stringify(user)) // resposta de um node para o frontend não pode ser um array, tem que ser uma string ou objeto JSON
-    }
-
-    if(method === 'POST' && url === '/users'){
-        const { name, email } = request.body
-
-        const user ={
-            id: randomUUID(),
-            name,
-            email,
-        }
-
-        database.insert('users', user)
-
-        return response.writeHead(201).end()
+    if(route) {
+        route.handler(request, response)
     }
 
     return response.writeHead(404).end('Not Found')
