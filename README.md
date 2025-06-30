@@ -1,4 +1,4 @@
-# Módulo 1: API RESTful com Node.js - Fundamentos
+# Node.js - Fundamentos
 
 Olá! Seja bem-vindo(a) ao repositório do primeiro módulo do meu aprendizado em desenvolvimento back-end.
 
