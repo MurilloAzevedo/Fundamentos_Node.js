@@ -14,15 +14,15 @@ const server = http.createServer (async(request, response) => {
         return route.method === method && route.path.test(url)
     })
 
-    if(route) {
+    if (route) {
         const routeParams = request.url.match(route.path)
 
         request.params = { ...routeParams.groups}
 
-        route.handler(request, response)
+        return route.handler(request, response)
     }
 
-    return response.writeHead(404).end('Not Found')
+    return response.writeHead(404).end()
 })
 
 server.listen(3333) //localhost
