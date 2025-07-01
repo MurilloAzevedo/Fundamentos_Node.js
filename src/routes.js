@@ -9,11 +9,14 @@ export const routes = [
         method: 'GET',
         path: buildRoutePath('/users'),
         handler: (req, res) => {
-            const user = database.select('users')
+            const { search } = req.query
+
+            const user = database.select('users', search ? {
+                name: search,
+                email: search
+            } : null)
             
-            return res
-            .setHeader('Content-Type', 'application/json') // Definindo o tipo de conteúdo da resposta como JSON
-            .end(JSON.stringify(user)) // resposta de um node para o frontend não pode ser um array, tem que ser uma string ou objeto JSON
+            return res.end(JSON.stringify(user)) // resposta de um node para o frontend não pode ser um array, tem que ser uma string ou objeto JSON
         }
     },
 
