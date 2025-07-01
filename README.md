@@ -15,4 +15,4 @@ O foco principal deste módulo é dominar os seguintes conceitos:
     * **Status Codes:** O significado dos principais códigos de status e quando utilizá-los.
     * **Tipos de Parâmetros:** Como receber e manipular `Route Params`, `Query Params` e `Body Params`.
 
-Este projeto é um passo fundamental no meu desenvolvimento. Sinta-se à vontade para explorar o código, acompanhar meu progresso e, quem sabe, se inspirar para fazer o mesmo!
+Este projeto é um passo fundamental no meu desenvolvimento. Sinta-se à vontade para explorar o código, acompanhar meu progresso!
